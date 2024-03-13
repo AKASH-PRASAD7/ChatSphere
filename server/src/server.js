@@ -4,6 +4,7 @@ import dbConnect from "./db/dbConnection.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
+import messageRoutes from "./routes/message.js";
 const app = express();
 
 // Middlewares
@@ -30,6 +31,7 @@ app.get("/", async (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/message", messageRoutes);
 
 app.listen(PORT, () => {
   dbConnect();
