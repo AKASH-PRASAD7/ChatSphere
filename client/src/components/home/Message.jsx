@@ -11,7 +11,8 @@ const Message = () => {
             className="w-8 h-8 rounded-full mr-3"
           />
           <div className="flex flex-col gap-1">
-            <div className="bg-blue-500 text-white p-3 rounded-lg max-w-xs">
+            <span className="font-bold text-base mr-1">Jhon cena</span>
+            <div className="bg-blue-500 text-white p-1 rounded-lg max-w-xs">
               <p className="text-sm">hello world</p>
             </div>
 
