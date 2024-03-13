@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { sendMessage } from "../controllers/message.js";
+import { sendMessage, getMessages } from "../controllers/message.js";
 import verifyCookie from "../middleware/verifyCookie.js";
 
 /**
@@ -12,6 +12,18 @@ import verifyCookie from "../middleware/verifyCookie.js";
  */
 
 router.post("/send", verifyCookie, (req, res) => sendMessage(req, res));
+
+/**
+ * Route     /api/message/
+ * Des       Get all messages
+ * Params    conversationId
+ * Access    Private
+ * Method    GET
+ */
+
+router.get("/:conversationId", verifyCookie, (req, res) =>
+  getMessages(req, res)
+);
 
 router.get("*", (req, res) => {
   try {
