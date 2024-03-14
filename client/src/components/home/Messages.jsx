@@ -26,7 +26,9 @@ const Messges = () => {
           ))}
         {loading && <LoadingMessage />}
         {!loading && messages.length === 0 && (
-          <p className="text-center">Start Chatting 🚀🚀🚀</p>
+          <p className="text-center text-white font-semibold">
+            Start Chatting 🚀🚀🚀
+          </p>
         )}
       </div>
     </>
