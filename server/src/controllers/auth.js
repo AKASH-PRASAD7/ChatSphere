@@ -46,6 +46,7 @@ export const signUp = async (req, res) => {
       httpOnly: true,
       expires: new Date(Date.now() + oneDay),
       secure: true, // set to true if your using https
+      sameSite: "none",
     });
 
     return res.status(201).json({
@@ -94,6 +95,7 @@ export const signIn = async (req, res) => {
       httpOnly: true,
       expires: new Date(Date.now() + oneDay),
       secure: true, // set to true if your using https
+      sameSite: "none",
     });
     return res.status(200).json({
       success: true,
