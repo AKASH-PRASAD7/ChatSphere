@@ -2,6 +2,7 @@ import Conversation from "../models/Conversation.js";
 import Message from "../models/Message.js";
 import User from "../models/user.js";
 import mongoose from "mongoose";
+import { io } from "../socket/socket.js";
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
@@ -35,6 +36,22 @@ export const sendMessage = async (req, res) => {
       await groupConversation.save();
     }
     const user = await User.findById(senderId);
+
+    // SOCKET IO FUNCTIONALITY WILL GO HERE
+
+    // Send the new message to all the connected clients
+    io.emit("newMessage", {
+      _id: newMessage._id,
+      senderId: {
+        _id: user._id,
+        userName: user.userName,
+        profilePic: user.profilePic,
+      },
+      message: newMessage.message,
+      createdAt: newMessage.createdAt,
+      updatedAt: newMessage.updatedAt,
+      __v: newMessage.__v,
+    });
 
     let newMsg = {
       _id: newMessage._id,

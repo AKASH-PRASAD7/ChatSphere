@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from "react";
 import Message from "./Message";
 import getMessages from "../../hooks/useGetMessage";
 import LoadingMessage from "../LoadingMessage";
+import useListenMessages from "../../hooks/useListenMessages";
 
 const Messges = () => {
+  useListenMessages();
   const { messages, loading } = getMessages();
 
   const lastMessageRef = useRef();
@@ -22,6 +24,10 @@ const Messges = () => {
               <Message key={message._id} message={message} />
             </div>
           ))}
+        {loading && <LoadingMessage />}
+        {!loading && messages.length === 0 && (
+          <p className="text-center">Start Chatting 🚀🚀🚀</p>
+        )}
       </div>
     </>
   );

@@ -5,11 +5,11 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import messageRoutes from "./routes/message.js";
-const app = express();
+import { app, server } from "./socket/socket.js";
 
 // Middlewares
 app.use(express.json()); // for parsing application/json
-app.use(cookieParser()); 
+app.use(cookieParser());
 app.use(
   cors({
     origin: conf.CLIENT_URL,
@@ -40,7 +40,7 @@ app.get("/", async (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   dbConnect();
   console.log(`Server is running on port ${PORT}!`);
 });
