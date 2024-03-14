@@ -48,7 +48,7 @@ const SignIn = () => {
             )}
           </div>
           <form onSubmit={handleSubmit}>
-            <div>
+            <div className="mt-2">
               <label className="label p-2 ">
                 <span className="text-base label-text text-white">
                   Username
@@ -66,7 +66,7 @@ const SignIn = () => {
               />
             </div>
 
-            <div>
+            <div className="mt-2">
               <label className="label">
                 <span className="text-base label-text text-white">
                   Password
