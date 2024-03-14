@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { SendHorizontal } from "lucide-react";
+import useSendMessage from "../../hooks/useSendMessage";
+import toast from "react-hot-toast";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const { loading, sendMessage } = useSendMessage();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (message.trim() === "") return;
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setMessage("");
-    }, 1000);
+    if (!message) {
+      toast.error("Message cannot be empty");
+      return;
+    }
+    await sendMessage(message);
+    setMessage("");
   };
   return (
     <>
@@ -30,7 +33,7 @@ const MessageInput = () => {
             className="absolute inset-y-0 end-0 flex items-center pe-3"
           >
             {loading ? (
-              <div className="loading loading-spinner"></div>
+              <div className="spinner"></div>
             ) : (
               <SendHorizontal className="text-lime-500" />
             )}

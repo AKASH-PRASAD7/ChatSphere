@@ -9,8 +9,15 @@ const app = express();
 
 // Middlewares
 app.use(express.json()); // for parsing application/json
-app.use(cors()); // for cors policy
-app.use(cookieParser()); // for parsing cookies
+app.use(cookieParser()); 
+app.use(
+  cors({
+    origin: conf.CLIENT_URL,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
+// for parsing cookies
 
 // for handling invalid JSON format in the request body
 app.use((err, _, res, next) => {

@@ -1,20 +1,23 @@
 import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
 
-const useLogout = () => {
+const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+  const { messages, setMessages } = useConversation();
 
-  const logout = async () => {
+  const sendMessage = async (message) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}api/auth/signout`,
+        `${import.meta.env.VITE_BASE_URL}api/message/send`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           credentials: "include",
+          body: JSON.stringify({ message }),
         }
       );
       const data = await res.json();
@@ -22,8 +25,7 @@ const useLogout = () => {
         throw new Error(data.message);
       }
 
-      localStorage.removeItem("chat-user");
-      setAuthUser(null);
+      setMessages([...messages, data]);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -31,6 +33,6 @@ const useLogout = () => {
     }
   };
 
-  return { loading, logout };
+  return { sendMessage, loading };
 };
-export default useLogout;
+export default useSendMessage;
