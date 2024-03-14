@@ -45,6 +45,7 @@ export const signUp = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + oneDay),
+      secure: true, // set to true if your using https
     });
 
     return res.status(201).json({
@@ -92,16 +93,15 @@ export const signIn = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + oneDay),
+      secure: true, // set to true if your using https
     });
-    return res
-      .status(200)
-      .json({
-        success: true,
-        id: user._id,
-        fullName: user.fullName,
-        username: user.username,
-        profilePic: user.profilePic,
-      });
+    return res.status(200).json({
+      success: true,
+      id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      profilePic: user.profilePic,
+    });
   } catch (error) {
     console.log("Error in signIn controller ", error.message);
     return res.status(500).json({ success: false, message: "Server Error" });
