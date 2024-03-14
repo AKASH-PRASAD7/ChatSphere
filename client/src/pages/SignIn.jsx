@@ -1,31 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useSignin from "../hooks/useSignin";
 
 const SignIn = () => {
   const [inputs, setInputs] = useState({
-    username: "",
+    userName: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState("");
-
-  const [loading, setLoading] = useState(false);
+  const { loading, signIn } = useSignin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setErrors("");
+
     try {
-      console.log(inputs);
+      await signIn(inputs);
     } catch (error) {
       console.log(error);
-      setErrors(error.message);
-    } finally {
-      setLoading(false);
-      setInputs({
-        username: "",
-        password: "",
-      });
     }
   };
 
@@ -41,11 +32,6 @@ const SignIn = () => {
             <h1 className="text-xl font-semibold text-center text-gray-300">
               Sign In
             </h1>
-            {errors && (
-              <p className="bg-red-500 text-white rounded-xl p-1 text-sm mt-2">
-                {errors}
-              </p>
-            )}
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mt-2">
@@ -58,10 +44,9 @@ const SignIn = () => {
                 type="text"
                 placeholder="johndoe"
                 className="w-full input rounded-xl p-2 bg-black text-white h-10"
-                value={inputs.username}
-                required
+                value={inputs.userName}
                 onChange={(e) =>
-                  setInputs({ ...inputs, username: e.target.value })
+                  setInputs({ ...inputs, userName: e.target.value })
                 }
               />
             </div>
@@ -77,7 +62,6 @@ const SignIn = () => {
                 placeholder="Enter Password"
                 className="w-full input rounded-xl p-2 bg-black text-white h-10"
                 value={inputs.password}
-                required
                 onChange={(e) =>
                   setInputs({ ...inputs, password: e.target.value })
                 }
@@ -97,7 +81,7 @@ const SignIn = () => {
                 disabled={loading}
               >
                 {loading ? (
-                  <span className="loading loading-spinner"></span>
+                  <span className="loading loading-spinner">SigningIn...</span>
                 ) : (
                   "Sign In"
                 )}
