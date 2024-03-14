@@ -12,7 +12,7 @@ app.use(express.json()); // for parsing application/json
 app.use(cookieParser());
 app.use(
   cors({
-    origin: conf.CLIENT_URL,
+    origin: "https://chatsphere-akash.vercel.app",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
