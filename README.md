@@ -4,6 +4,9 @@ ChatSphere is a full-stack real-time chat application built using the MERN stack
 
 ## Screenshots
 
+![12](https://github.com/AKASH-PRASAD7/ChatSphere/assets/110546856/ceb881b9-52f4-4d07-b3a5-2983a1ae8127)
+
+
 ## Features
 
 - User authentication 🔒: Users can register, login, and logout securely.
