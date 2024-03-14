@@ -1,5 +1,6 @@
 import Conversation from "../models/Conversation.js";
 import Message from "../models/Message.js";
+import User from "../models/user.js";
 import mongoose from "mongoose";
 export const sendMessage = async (req, res) => {
   try {
@@ -33,8 +34,22 @@ export const sendMessage = async (req, res) => {
       groupConversation.messages.push(newMessage._id);
       await groupConversation.save();
     }
+    const user = await User.findById(senderId);
 
-    res.status(200).json({ success: true, newMessage });
+    let newMsg = {
+      _id: newMessage._id,
+      senderId: {
+        _id: user._id,
+        userName: user.userName,
+        profilePic: user.profilePic,
+      },
+      message: newMessage.message,
+      createdAt: newMessage.createdAt,
+      updatedAt: newMessage.updatedAt,
+      __v: newMessage.__v,
+    };
+
+    res.status(200).json({ success: true, newMsg });
   } catch (error) {
     console.log("Error in sendMessage controller: ", error.message);
     res.status(500).json({ success: false, message: "Server Error" });
@@ -52,9 +67,13 @@ export const getMessages = async (req, res) => {
     }
 
     // Assuming conversationId is a valid MongoDB ObjectId
-    const conversation = await Conversation.findById(
-      conversationId.toString()
-    ).populate("messages");
+    const conversation = await Conversation.findById(conversationId).populate({
+      path: "messages",
+      populate: {
+        path: "senderId",
+        select: "userName profilePic", // Select only necessary fields
+      },
+    });
 
     if (!conversation) {
       return res

@@ -47,17 +47,15 @@ export const signUp = async (req, res) => {
       expires: new Date(Date.now() + oneDay),
     });
 
-    return res
-      .status(201)
-      .json({
-        success: true,
-        message: "User created successfully",
-        _id: newUser._id,
-        fullName: newUser.fullName,
-        username: newUser.userName,
-        profilePic: newUser.profilePic,
-        gender: newUser.gender,
-      });
+    return res.status(201).json({
+      success: true,
+      message: "User created successfully",
+      _id: newUser._id,
+      fullName: newUser.fullName,
+      username: newUser.userName,
+      profilePic: newUser.profilePic,
+      gender: newUser.gender,
+    });
   } catch (error) {
     console.log("Error in signUp controller ", error.message);
     return res.status(500).json({ success: false, message: "Server Error" });
@@ -97,7 +95,13 @@ export const signIn = async (req, res) => {
     });
     return res
       .status(200)
-      .json({ success: true, message: "User logged in successfully" });
+      .json({
+        success: true,
+        id: user._id,
+        fullName: user.fullName,
+        username: user.username,
+        profilePic: user.profilePic,
+      });
   } catch (error) {
     console.log("Error in signIn controller ", error.message);
     return res.status(500).json({ success: false, message: "Server Error" });
