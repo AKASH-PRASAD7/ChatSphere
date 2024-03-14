@@ -35,7 +35,10 @@ const userSchema = new mongoose.Schema(
 //method
 userSchema.methods.generateJwtToken = function () {
   try {
-    return jwt.sign({ user: this._id.toString() }, conf.JWT_SECRET_KEY);
+    return jwt.sign(
+      { user: this._id.toString() },
+      "dsf4tq3gfsadaga@$$r32rwefdasfweadf3W"
+    );
   } catch (error) {
     return error;
   }

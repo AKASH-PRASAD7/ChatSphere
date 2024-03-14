@@ -11,7 +11,7 @@ const verifyCookie = async (req, res, next) => {
         .status(401)
         .json({ success: false, message: "Unauthorized Please Sign In" });
     }
-    const token = jwt.verify(cookie, conf.JWT_SECRET_KEY);
+    const token = jwt.verify(cookie, "dsf4tq3gfsadaga@$$r32rwefdasfweadf3W");
 
     if (!token) {
       return res.status(401).json({ error: "Unauthorized Invalid Token" });
