@@ -13,7 +13,7 @@ const useGetMessages = () => {
         const res = await fetch(
           `${
             import.meta.env.VITE_BASE_URL
-          }api/message/65f1862d146cfedb9f5ca7a4`,
+          }api/message/65f2c8f2ac74b668d80bed29`,
           {
             method: "GET",
             headers: {
